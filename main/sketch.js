@@ -17,7 +17,7 @@ function setup() {
 function draw() {
   clear();
   remaining_time = measuring_time - millis();
-  if (remaining_time > 170000){
+  if (remaining_time > 0){
     var sec = parseInt(remaining_time % 60000 / 1000);
     var min = parseInt(remaining_time / 60000);
     if (sec<10){
@@ -31,6 +31,3 @@ function draw() {
   }
 }
 
-function mouseClicked(){
-  noLoop();
-}
