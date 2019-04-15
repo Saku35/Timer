@@ -7,7 +7,7 @@ var is_stop = 1;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(255);
-  textAlign(LEFT,CENTER);
+  textAlign(LEFT, CENTER);
   textSize(40);
   frameRate(5);
   remaining_time = measuring_time;
@@ -36,7 +36,7 @@ function keyPressed() {
       is_stop = 0;
     } else {
       measuring_time = measuring_time - time_elapsed;
-      is_stop =1;
+      is_stop = 1;
     }
   }
 }
