@@ -1,6 +1,10 @@
-var measuring_time = 180000; //ms
+var measuring_time = 180000; // milli seconds
 var remaining_time;
-var flag = 0;
+
+var time_base;
+var time_elapsed = 0;
+
+var IsStop = 1;
 
 function setup() {
   // put setup code here
@@ -9,25 +13,40 @@ function setup() {
 
   textAlign(LEFT,CENTER);
   textSize(40);
-  frameRate(10);
-
-  measuring_time += millis();
+  frameRate(5);
+  remaining_time = measuring_time;
 }
 
 function draw() {
-  clear();
-  remaining_time = measuring_time - millis();
-  if (remaining_time > 0){
-    var sec = parseInt(remaining_time % 60000 / 1000);
-    var min = parseInt(remaining_time / 60000);
-    if (sec<10){
-      text(min + ":0" + sec, windowWidth / 2, windowHeight/2);
-    }else{
-      text(min + ":" + sec, windowWidth / 2, windowHeight/2);
-    }
-  }else{
-    noLoop();
-    text("0:00", windowWidth / 2, windowHeight / 2);
+
+  if (IsStop === 0){
+    var time_now = new Date();
+    time_elapsed = time_now.getTime() - time_base;
+    
+    remaining_time = measuring_time - time_elapsed;
   }
+
+  if(remaining_time<=0){
+    noLoop();
+  }
+  else{
+    clear();
+    text(Math.floor(remaining_time/ 1000), 100, 100);
+  }
+  
 }
 
+function keyPressed(){
+  
+  if (keyCode === 32){
+    if (IsStop === 1){
+      var tmp = new Date();
+      time_base = tmp.getTime();
+      IsStop = 0;
+    }
+    else{
+      measuring_time = measuring_time - time_elapsed;
+      IsStop =1;
+    }
+  }
+}
