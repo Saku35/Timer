@@ -28,15 +28,20 @@ function draw() {
   }
 }
 
-function keyPressed() {
-  if (keyCode === 32) {
-    if (is_stop === 1) {
-      var tmp = new Date();
-      time_base = tmp.getTime();
+function keyTyped() {
+  switch (keyCode) {
+    case 97: // aキー
+      if (is_stop === 1) {
+        var tmp = new Date();
+        time_base = tmp.getTime();
+      }
       is_stop = 0;
-    } else {
-      measuring_time = measuring_time - time_elapsed;
+      break;
+    case 122: // zキー
+      if (is_stop === 0) {
+        measuring_time = measuring_time - time_elapsed;
+      }
       is_stop = 1;
-    }
+      break;
   }
 }
