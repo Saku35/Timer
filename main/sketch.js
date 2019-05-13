@@ -1,5 +1,6 @@
 var measuring_time = 10 * 1000; // milli seconds
 var remaining_time;
+var initial_time;
 var time_base;
 var time_elapsed = 0;
 var is_stop = 1;
@@ -11,6 +12,7 @@ function setup() {
   textSize(40);
   frameRate(5);
   remaining_time = measuring_time;
+  initial_time = measuring_time;
 }
 
 function draw() {
@@ -39,18 +41,41 @@ function keyTyped() {
       break;
     case 122: // zキー
       if (is_stop === 0) {
+        var time_now = new Date();
+        time_elapsed = time_now.getTime() - time_base;
         measuring_time = measuring_time - time_elapsed;
       }
       is_stop = 1;
       break;
     default:
+  }
+}
 
+function keyPressed() {
+  if (keyCode === UP_ARROW) {
+    secondAdd(1);
+  } else if (keyCode === DOWN_ARROW) {
+    secondAdd(-1);
   }
 }
 
 function timerReset() {
   if (is_stop === 1) {
-    measuring_time = 10*1000;
+    measuring_time = initial_time;
     remaining_time = measuring_time;
+  }
+}
+
+function secondAdd(add_sec) {
+  if (is_stop === 1) {
+    initial_time += add_sec * 1000;
+    timerReset();
+  }
+}
+
+function minuteAdd(add_min) {
+  if (is_stop === 1) {
+    initial_time += add_min * 1000 * 60;
+    timerReset();
   }
 }
