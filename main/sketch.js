@@ -43,5 +43,14 @@ function keyTyped() {
       }
       is_stop = 1;
       break;
+    default:
+
+  }
+}
+
+function timerReset() {
+  if (is_stop === 1) {
+    measuring_time = 10*1000;
+    remaining_time = measuring_time;
   }
 }
