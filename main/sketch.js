@@ -1,4 +1,4 @@
-var measuring_time = 10 * 1000; // milli seconds
+var measuring_time = 80 * 1000; // milli seconds
 var remaining_time;
 var initial_time;
 var time_base;
@@ -18,8 +18,14 @@ function setup() {
 }
 
 function dispTime() {
+  remaining_time = Math.floor(remaining_time / 1000);
+  var mm = parseInt(remaining_time / 60, 10);
+  var ss = remaining_time % 60;
+
+  var mm_2 = ('00' + mm).slice(-2);
+  var ss_2 = ('00' + ss).slice(-2);
   clear();
-  text(Math.floor(remaining_time / 1000), 100, 100);
+  text(mm_2 + ':' + ss_2, 100, 100);
 }
 
 function draw() {
