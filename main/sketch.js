@@ -13,21 +13,28 @@ function setup() {
   frameRate(5);
   remaining_time = measuring_time;
   initial_time = measuring_time;
+
+  dispTime();
+}
+
+function dispTime() {
+  clear();
+  text(Math.floor(remaining_time / 1000), 100, 100);
 }
 
 function draw() {
-  if (is_stop === 0) {
-    var time_now = new Date();
-    time_elapsed = time_now.getTime() - time_base;
-    remaining_time = measuring_time - time_elapsed;
-  }
+  if (is_stop === 1) return;
 
   if (remaining_time <= 0) {
-    noLoop();
-  } else {
-    clear();
-    text(Math.floor(remaining_time / 1000), 100, 100);
+    is_stop = 1
+    return;
   }
+
+  var time_now = new Date();
+  time_elapsed = time_now.getTime() - time_base;
+  remaining_time = measuring_time - time_elapsed;
+  
+  dispTime();
 }
 
 function keyTyped() {
@@ -78,6 +85,8 @@ function timerReset() {
 
   measuring_time = initial_time;
   remaining_time = measuring_time;
+
+  dispTime();
 }
 
 function secondAdd(add_sec) {
