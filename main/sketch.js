@@ -31,51 +31,65 @@ function draw() {
 }
 
 function keyTyped() {
-  switch (keyCode) {
-    case 97: // aキー
-      if (is_stop === 1) {
-        var tmp = new Date();
-        time_base = tmp.getTime();
-      }
-      is_stop = 0;
-      break;
-    case 122: // zキー
-      if (is_stop === 0) {
-        var time_now = new Date();
-        time_elapsed = time_now.getTime() - time_base;
-        measuring_time = measuring_time - time_elapsed;
-      }
-      is_stop = 1;
-      break;
-    default:
+  if (keyCode === 97) {
+    startTimer();
+    return;
   }
+  
+  if (keyCode === 122) {
+    stopTimer();
+    return;
+  }
+}
+
+function startTimer() {
+  if (is_stop != 1) return;
+
+  var tmp = new Date();
+  time_base = tmp.getTime();
+
+  is_stop = 0;
+}
+
+function stopTimer() {
+  if (is_stop != 0) return;
+
+  var time_now = new Date();
+  time_elapsed = time_now.getTime() - time_base;
+  measuring_time = measuring_time - time_elapsed;
+
+  is_stop = 1;
 }
 
 function keyPressed() {
   if (keyCode === UP_ARROW) {
     secondAdd(1);
-  } else if (keyCode === DOWN_ARROW) {
+    return;
+  }
+  
+  if (keyCode === DOWN_ARROW) {
     secondAdd(-1);
+    return;
   }
 }
 
 function timerReset() {
-  if (is_stop === 1) {
-    measuring_time = initial_time;
-    remaining_time = measuring_time;
-  }
+  if (is_stop != 1)  return;
+
+  measuring_time = initial_time;
+  remaining_time = measuring_time;
 }
 
 function secondAdd(add_sec) {
-  if (is_stop === 1) {
-    initial_time += add_sec * 1000;
-    timerReset();
-  }
+  if (is_stop != 1)  return;
+
+  initial_time += add_sec * 1000;
+  timerReset();
 }
 
 function minuteAdd(add_min) {
-  if (is_stop === 1) {
-    initial_time += add_min * 1000 * 60;
-    timerReset();
-  }
+  if (is_stop != 1) return;
+
+  initial_time += add_min * 1000 * 60;
+  timerReset();
 }
