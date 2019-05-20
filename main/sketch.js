@@ -1,4 +1,4 @@
-var measuring_time = 80 * 1000; // milli seconds
+var measuring_time = 15 * 1000; // milli seconds
 var remaining_time;
 var initial_time;
 var time_base;
@@ -14,25 +14,42 @@ function setup() {
   remaining_time = measuring_time;
   initial_time = measuring_time;
 
+  clear();
   dispTime();
 }
 
 function dispTime() {
-  remaining_time = Math.floor(remaining_time / 1000);
-  var mm = parseInt(remaining_time / 60, 10);
-  var ss = remaining_time % 60;
+  var t = Math.floor(remaining_time / 1000);
+  var mm = parseInt(t / 60, 10);
+  var ss = t % 60;
 
   var mm_2 = ('00' + mm).slice(-2);
   var ss_2 = ('00' + ss).slice(-2);
-  clear();
+  
+  if (ss_2 < 0) ss_2 = '00';
   text(mm_2 + ':' + ss_2, 100, 100);
+}
+
+function drawPreparation() {
+  text('拍手の準備してください!', 200, 200);
+}
+
+function drawFinish() {
+  text('拍手！！！！！！', 200, 200);
 }
 
 function draw() {
   if (is_stop === 1) return;
 
+  clear();
+
+  if (remaining_time <= 10 * 1000 && remaining_time > 0) {
+    drawPreparation();
+  }
+
   if (remaining_time <= 0) {
-    is_stop = 1
+    is_stop = 1;
+    drawFinish();
     return;
   }
 
@@ -92,6 +109,7 @@ function timerReset() {
   measuring_time = initial_time;
   remaining_time = measuring_time;
 
+  clear();
   dispTime();
 }
 
