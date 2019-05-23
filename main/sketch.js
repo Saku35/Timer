@@ -1,9 +1,9 @@
-var measuring_time = 15 * 1000; // milli seconds
-var remaining_time;
-var initial_time;
-var time_base;
-var time_elapsed = 0;
-var is_stop = 1;
+var initial_time = 15 * 1000; // milli seconds
+var measuring_time; // 一旦中断したときの残り時間
+var remaining_time; // 表示する時間
+
+var time_base; // スタートボタンを押した時の時刻
+var is_stop = 1; // timerが止まっているかどうか
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -11,8 +11,8 @@ function setup() {
   textAlign(LEFT, CENTER);
   textSize(40);
   frameRate(5);
-  remaining_time = measuring_time;
-  initial_time = measuring_time;
+  remaining_time = initial_time;
+  measuring_time = initial_time;
 
   clear();
   dispTime();
@@ -39,7 +39,7 @@ function drawFinish() {
 
 function UpdateTime() {
   var time_now = new Date();
-  time_elapsed = time_now.getTime() - time_base;
+  var time_elapsed = time_now.getTime() - time_base;
   remaining_time = measuring_time - time_elapsed;
   if (remaining_time < 0) {
     remaining_time = 0;
@@ -88,7 +88,7 @@ function keyTyped() {
 }
 
 function startTimer() {
-  if (is_stop != 1) return;
+  // if (is_stop != 1) return;
 
   var tmp = new Date();
   time_base = tmp.getTime();
@@ -97,10 +97,10 @@ function startTimer() {
 }
 
 function stopTimer() {
-  if (is_stop != 0) return;
+  // if (is_stop != 0) return;
 
   var time_now = new Date();
-  time_elapsed = time_now.getTime() - time_base;
+  var time_elapsed = time_now.getTime() - time_base;
   measuring_time = measuring_time - time_elapsed;
 
   is_stop = 1;
