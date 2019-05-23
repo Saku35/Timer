@@ -19,14 +19,13 @@ function setup() {
 }
 
 function dispTime() {
-  var t = Math.floor(remaining_time / 1000);
+  var t = Math.ceil(remaining_time / 1000);
   var mm = parseInt(t / 60, 10);
   var ss = t % 60;
 
   var mm_2 = ('00' + mm).slice(-2);
   var ss_2 = ('00' + ss).slice(-2);
   
-  if (ss_2 < 0) ss_2 = '00';
   text(mm_2 + ':' + ss_2, 100, 100);
 }
 
@@ -38,25 +37,41 @@ function drawFinish() {
   text('拍手！！！！！！', 200, 200);
 }
 
-function draw() {
-  if (is_stop === 1) return;
-
-  clear();
-
-  if (remaining_time <= 10 * 1000 && remaining_time > 0) {
-    drawPreparation();
-  }
-
-  if (remaining_time <= 0) {
-    is_stop = 1;
-    drawFinish();
-    return;
-  }
-
+function UpdateTime() {
   var time_now = new Date();
   time_elapsed = time_now.getTime() - time_base;
   remaining_time = measuring_time - time_elapsed;
+  if (remaining_time < 0) {
+    remaining_time = 0;
+    is_stop = 1;
+  }
+}
+
+function drawMessage() {
+  if (remaining_time <= 10 * 1000 && remaining_time > 0) {
+    drawPreparation();
+    return;
+  }
+
+  if (remaining_time === 0) {
+    drawFinish();
+    return;
+  }
+}
+
+
+function draw() {
+  if (is_stop === 1) return;
   
+  clear();
+  // 残りの時間を計算する
+  UpdateTime();
+
+  // メッセージ書く処理
+  drawMessage();
+  // 背景を描く
+
+  // 残り時間を書く
   dispTime();
 }
 
