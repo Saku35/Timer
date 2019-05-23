@@ -38,6 +38,7 @@ function drawFinish() {
 }
 
 function UpdateTime() {
+  if (is_stop === 1) return;
   var time_now = new Date();
   var time_elapsed = time_now.getTime() - time_base;
   remaining_time = measuring_time - time_elapsed;
@@ -61,7 +62,6 @@ function drawMessage() {
 
 
 function draw() {
-  if (is_stop === 1) return;
   
   clear();
   // 残りの時間を計算する
@@ -88,7 +88,7 @@ function keyTyped() {
 }
 
 function startTimer() {
-  // if (is_stop != 1) return;
+  if (is_stop === 0) return;
 
   var tmp = new Date();
   time_base = tmp.getTime();
@@ -97,7 +97,7 @@ function startTimer() {
 }
 
 function stopTimer() {
-  // if (is_stop != 0) return;
+  if (is_stop === 1) return;
 
   var time_now = new Date();
   var time_elapsed = time_now.getTime() - time_base;
