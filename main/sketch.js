@@ -1,15 +1,8 @@
 var initial_time = 15 * 1000; // milli seconds
 var measuring_time; // 一旦中断したときの残り時間
 var remaining_time; // 表示する時間
-
 var time_base; // スタートボタンを押した時の時刻
 var is_stop = 1; // timerが止まっているかどうか
-
-//fixme
-var m_start_time;
-var m_total_msec;
-var m_offset_msec;
-var m_start_pressed;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -19,10 +12,6 @@ function setup() {
   frameRate(5);
   remaining_time = initial_time;
   measuring_time = initial_time;
-
-  m_total_msec = 15 * 1000;
-  m_offset_msec = 0;
-  m_start_pressed = false;
 
   clear();
   dispTime();
@@ -40,15 +29,7 @@ function dispTime() {
   text(formatTime(remaining_time), 100, 100);
 }
 
-function drawPreparation() {
-  text('拍手の準備してください!', 200, 200);
-}
-
-function drawFinish() {
-  text('拍手！！！！！！', 200, 200);
-}
-
-function UpdateTime() {
+function updateTime() {
   if (is_stop === 1) return;
   var time_now = new Date();
   var time_elapsed = time_now.getTime() - time_base;
@@ -61,28 +42,22 @@ function UpdateTime() {
 
 function drawMessage() {
   if (remaining_time <= 10 * 1000 && remaining_time > 0) {
-    drawPreparation();
+    text('拍手の準備してください!', 200, 200);
     return;
   }
 
   if (remaining_time === 0) {
-    drawFinish();
+    text('拍手！！！！！！', 200, 200);
     return;
   }
 }
 
-
 function draw() {
-  
   clear();
-  // 残りの時間を計算する
-  UpdateTime();
 
-  // メッセージ書く処理
+  updateTime();
   drawMessage();
   // 背景を描く
-
-  // 残り時間を書く
   dispTime();
 }
 
@@ -101,21 +76,19 @@ function keyTyped() {
 
 function startTimer() {
   if (is_stop === 0) return;
+  is_stop = 0;
 
   var tmp = new Date();
   time_base = tmp.getTime();
-
-  is_stop = 0;
 }
 
 function stopTimer() {
   if (is_stop === 1) return;
+  is_stop = 1;
 
   var time_now = new Date();
   var time_elapsed = time_now.getTime() - time_base;
   measuring_time = measuring_time - time_elapsed;
-
-  is_stop = 1;
 }
 
 function keyPressed() {
