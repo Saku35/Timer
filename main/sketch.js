@@ -5,6 +5,12 @@ var remaining_time; // 表示する時間
 var time_base; // スタートボタンを押した時の時刻
 var is_stop = 1; // timerが止まっているかどうか
 
+//fixme
+var m_start_time;
+var m_total_msec;
+var m_offset_msec;
+var m_start_pressed;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(255);
@@ -14,19 +20,24 @@ function setup() {
   remaining_time = initial_time;
   measuring_time = initial_time;
 
+  m_total_msec = 15 * 1000;
+  m_offset_msec = 0;
+  m_start_pressed = false;
+
   clear();
   dispTime();
 }
 
-function dispTime() {
-  var t = Math.ceil(remaining_time / 1000);
-  var mm = parseInt(t / 60, 10);
-  var ss = t % 60;
+function formatTime(t) {
+  let msec = Math.ceil(t / 1000);
+  let mm = ('00' + parseInt(msec / 60, 10)).slice(-2);
+  let ss = ('00' + (msec % 60)).slice(-2);
 
-  var mm_2 = ('00' + mm).slice(-2);
-  var ss_2 = ('00' + ss).slice(-2);
-  
-  text(mm_2 + ':' + ss_2, 100, 100);
+  return mm + ':' + ss;
+}
+
+function dispTime() {
+  text(formatTime(remaining_time), 100, 100);
 }
 
 function drawPreparation() {
@@ -76,11 +87,12 @@ function draw() {
 }
 
 function keyTyped() {
+  //a
   if (keyCode === 97) {
     startTimer();
     return;
   }
-  
+  //z
   if (keyCode === 122) {
     stopTimer();
     return;
