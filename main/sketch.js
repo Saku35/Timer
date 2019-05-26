@@ -57,19 +57,24 @@ function draw() {
 
   updateTime();
   drawMessage();
-  // 背景を描く
+  // 背景を描画する
   dispTime();
 }
 
 function keyTyped() {
-  //a
+  // a
   if (keyCode === 97) {
     startTimer();
     return;
   }
-  //z
+  // z
   if (keyCode === 122) {
     stopTimer();
+    return;
+  }
+  // r
+  if (keyCode === 114) {
+    resetTimer();
     return;
   }
 }
@@ -103,7 +108,7 @@ function keyPressed() {
   }
 }
 
-function timerReset() {
+function resetTimer() {
   if (is_stop != 1)  return;
 
   measuring_time = initial_time;
