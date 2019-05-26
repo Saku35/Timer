@@ -1,7 +1,6 @@
 var initial_time = 15 * 1000; // milli seconds
 var measuring_time; // 一旦中断したときの残り時間
 var remaining_time; // 表示する時間
-
 var time_base; // スタートボタンを押した時の時刻
 var is_stop = 1; // timerが止まっているかどうか
 
@@ -18,26 +17,19 @@ function setup() {
   dispTime();
 }
 
+function formatTime(t) {
+  let msec = Math.ceil(t / 1000);
+  let mm = ('00' + parseInt(msec / 60, 10)).slice(-2);
+  let ss = ('00' + (msec % 60)).slice(-2);
+
+  return mm + ':' + ss;
+}
+
 function dispTime() {
-  var t = Math.ceil(remaining_time / 1000);
-  var mm = parseInt(t / 60, 10);
-  var ss = t % 60;
-
-  var mm_2 = ('00' + mm).slice(-2);
-  var ss_2 = ('00' + ss).slice(-2);
-  
-  text(mm_2 + ':' + ss_2, 100, 100);
+  text(formatTime(remaining_time), 100, 100);
 }
 
-function drawPreparation() {
-  text('拍手の準備してください!', 200, 200);
-}
-
-function drawFinish() {
-  text('拍手！！！！！！', 200, 200);
-}
-
-function UpdateTime() {
+function updateTime() {
   if (is_stop === 1) return;
   var time_now = new Date();
   var time_elapsed = time_now.getTime() - time_base;
@@ -50,37 +42,32 @@ function UpdateTime() {
 
 function drawMessage() {
   if (remaining_time <= 10 * 1000 && remaining_time > 0) {
-    drawPreparation();
+    text('拍手の準備してください!', 200, 200);
     return;
   }
 
   if (remaining_time === 0) {
-    drawFinish();
+    text('拍手！！！！！！', 200, 200);
     return;
   }
 }
 
-
 function draw() {
-  
   clear();
-  // 残りの時間を計算する
-  UpdateTime();
 
-  // メッセージ書く処理
+  updateTime();
   drawMessage();
   // 背景を描く
-
-  // 残り時間を書く
   dispTime();
 }
 
 function keyTyped() {
+  //a
   if (keyCode === 97) {
     startTimer();
     return;
   }
-  
+  //z
   if (keyCode === 122) {
     stopTimer();
     return;
@@ -89,21 +76,19 @@ function keyTyped() {
 
 function startTimer() {
   if (is_stop === 0) return;
+  is_stop = 0;
 
   var tmp = new Date();
   time_base = tmp.getTime();
-
-  is_stop = 0;
 }
 
 function stopTimer() {
   if (is_stop === 1) return;
+  is_stop = 1;
 
   var time_now = new Date();
   var time_elapsed = time_now.getTime() - time_base;
   measuring_time = measuring_time - time_elapsed;
-
-  is_stop = 1;
 }
 
 function keyPressed() {
