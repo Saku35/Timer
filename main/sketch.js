@@ -52,12 +52,25 @@ function drawMessage() {
   }
 }
 
+function drawBackground() {
+  let sepNumX = 20;
+  let Diameter = windowWidth / sepNumX;
+  let sepNumY = windowHeight / Diameter;
+  for (let i = 0; i < sepNumX; i++) {
+    let corX = Diameter * (i + 0.5);
+    for (let k = 0; k < sepNumY; k++){
+      let corY = Diameter * (k + 0.5);
+      ellipse(corX, corY, Diameter, Diameter);
+    }
+  }
+}
+
 function draw() {
   clear();
 
   updateTime();
+  drawBackground();
   drawMessage();
-  // 背景を描画する
   dispTime();
 }
 
@@ -113,9 +126,7 @@ function resetTimer() {
 
   measuring_time = initial_time;
   remaining_time = measuring_time;
-
-  clear();
-  dispTime();
+  
 }
 
 function secondAdd(add_sec) {
