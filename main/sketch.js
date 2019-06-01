@@ -6,6 +6,7 @@ var is_stop = 1; // timerが止まっているかどうか
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  colorMode(RGB, 1, 1, 1);
   background(255);
   textAlign(LEFT, CENTER);
   textSize(40);
@@ -26,7 +27,10 @@ function formatTime(t) {
 }
 
 function dispTime() {
-  text(formatTime(remaining_time), 100, 100);
+  fill(0,0,0);
+  textSize(300)
+  textAlign(CENTER)
+  text(formatTime(remaining_time), windowWidth / 2, windowHeight / 2);
 }
 
 function updateTime() {
@@ -42,25 +46,38 @@ function updateTime() {
 
 function drawMessage() {
   if (remaining_time <= 10 * 1000 && remaining_time > 0) {
-    text('拍手の準備してください!', 200, 200);
+    fill(0,0,0);
+    textSize(50)
+    textAlign(CENTER)
+    text('拍手の準備してください!', windowWidth / 2, windowHeight / 2 + 150 + 25);
     return;
   }
 
   if (remaining_time === 0) {
-    text('拍手！！！！！！', 200, 200);
+    fill(0,0,0);
+    textSize(100)
+    textAlign(CENTER)
+    text('拍手！！！！！！', windowWidth / 2, windowHeight / 2 + 150 + 50);
     return;
   }
 }
 
 function drawBackground() {
-  let sepNumX = 20;
-  let Diameter = windowWidth / sepNumX;
-  let sepNumY = windowHeight / Diameter;
+  
+  let sepNumX = 31;
+  let mod = sepNumX;
+  let lenRect = windowWidth / sepNumX;
+  let sepNumY = windowHeight / lenRect;
   for (let i = 0; i < sepNumX; i++) {
-    let corX = Diameter * (i + 0.5);
+    let corX = lenRect * i;
     for (let k = 0; k < sepNumY; k++){
-      let corY = Diameter * (k + 0.5);
-      ellipse(corX, corY, Diameter, Diameter);
+      let corY = lenRect * k;
+      let num = (i + k + Math.ceil(remaining_time / 50)) % mod;
+
+      noStroke();
+      
+      fill(num / mod ,0.7 ,0.5);
+      rect(corX, corY, lenRect * 0.9, lenRect * 0.9, 5);
     }
   }
 }
@@ -126,19 +143,19 @@ function resetTimer() {
 
   measuring_time = initial_time;
   remaining_time = measuring_time;
-  
+
 }
 
 function secondAdd(add_sec) {
   if (is_stop != 1)  return;
 
   initial_time += add_sec * 1000;
-  timerReset();
+  resetTimer();
 }
 
 function minuteAdd(add_min) {
   if (is_stop != 1) return;
 
   initial_time += add_min * 1000 * 60;
-  timerReset();
+  resetTimer();
 }
