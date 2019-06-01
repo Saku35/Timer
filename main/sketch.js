@@ -100,6 +100,13 @@ function draw() {
   dispTime();
 }
 
+function setTimer(ms) {
+  if (is_stop != 1)  return;
+
+  initial_time = ms;
+  resetTimer();
+}
+
 function keyTyped() {
   // a
   if (keyCode === 97) {
@@ -114,6 +121,26 @@ function keyTyped() {
   // r
   if (keyCode === 114) {
     resetTimer();
+    return;
+  }
+  // 1
+  if (keyCode === 49) {
+    setTimer(3 * 60 * 1000);
+    return;
+  }
+  // 2
+  if (keyCode === 50) {
+    setTimer(5 * 60 * 1000);
+    return;
+  }
+  // 3
+  if (keyCode === 51) {
+    setTimer(15 * 60 * 1000);
+    return;
+  }
+  // 4
+  if (keyCode === 52) {
+    setTimer(30 * 60 * 1000);
     return;
   }
 }
@@ -165,6 +192,6 @@ function secondAdd(add_sec) {
 function minuteAdd(add_min) {
   if (is_stop != 1) return;
 
-  initial_time += add_min * 1000 * 60;
+  initial_time += add_min * 60 * 1000;
   resetTimer();
 }
