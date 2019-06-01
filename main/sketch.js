@@ -82,11 +82,20 @@ function drawBackground() {
   }
 }
 
+function drawTitle() {
+  let txtSize = 100;
+  fill(0, 0, 0);
+  textAlign(CENTER);
+  textSize(txtSize);
+  text('とちぎRuby会議08', windowWidth / 2, txtSize / 2 + 20);
+}
+
 function draw() {
   clear();
 
   updateTime();
   drawBackground();
+  drawTitle();
   drawMessage();
   dispTime();
 }
