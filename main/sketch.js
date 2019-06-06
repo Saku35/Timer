@@ -27,7 +27,13 @@ function formatTime(t) {
 }
 
 function dispTime() {
-  fill(0,0,0);
+  if (remaining_time < 10 * 1000) {
+    fill(1, 0, 0);
+  }
+  else {
+    fill(0, 0, 0);
+  }
+
   textSize(300);
   textAlign(CENTER);
   text(formatTime(remaining_time), windowWidth / 2, windowHeight / 2);
