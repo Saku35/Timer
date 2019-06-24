@@ -27,16 +27,20 @@ function formatTime(t) {
 }
 
 function dispTime() {
-  if (remaining_time < 10 * 1000) {
-    fill(1, 0, 0);
-  }
-  else {
-    fill(0, 0, 0);
-  }
-
+  fill(0,0,0);
   textSize(300);
   textAlign(CENTER);
-  text(formatTime(remaining_time), windowWidth / 2, windowHeight / 2);
+
+  let txt = formatTime(remaining_time);
+  if (remaining_time < 10 * 1000) {
+    fill(1, 0, 0);
+    if (remaining_time === 0) {
+      txt = "8888888";
+    }
+  }
+  
+  
+  text(txt, windowWidth / 2, windowHeight / 2);
 }
 
 function updateTime() {
@@ -50,23 +54,6 @@ function updateTime() {
   }
 }
 
-function drawMessage() {
-  if (remaining_time <= 10 * 1000 && remaining_time > 0) {
-    fill(0,0,0);
-    textSize(50);
-    textAlign(CENTER);
-    text('拍手の準備してください!', windowWidth / 2, windowHeight / 2 + 150 + 25);
-    return;
-  }
-
-  if (remaining_time === 0) {
-    fill(0,0,0);
-    textSize(100);
-    textAlign(CENTER);
-    text('拍手！！！！！！', windowWidth / 2, windowHeight / 2 + 150 + 50);
-    return;
-  }
-}
 
 function drawBackground() {
   let sepNumX = 31;
@@ -77,7 +64,13 @@ function drawBackground() {
     let corX = lenRect * i;
     for (let k = 0; k < sepNumY; k++) {
       let corY = lenRect * k;
-      let num = (i + k + Math.ceil(remaining_time / 50)) % mod;
+      let num = 0;
+      if (remaining_time > 10 * 1000) {
+        num =  (i + k + Math.ceil(remaining_time / 80)) % mod; 
+      } else {
+        num = (i * k + Math.ceil(remaining_time / 80))% mod;
+      }
+      
 
       noStroke();
       fill(num / mod, 0.7, 0.5);
@@ -100,7 +93,6 @@ function draw() {
   updateTime();
   drawBackground();
   drawTitle();
-  drawMessage();
   dispTime();
 }
 
