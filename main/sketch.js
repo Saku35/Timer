@@ -13,7 +13,7 @@ function setup() {
   frameRate(5);
   remaining_time = initial_time;
   measuring_time = initial_time;
-
+  textFont('YuGothic');
   clear();
   dispTime();
 }
@@ -32,14 +32,18 @@ function dispTime() {
   textAlign(CENTER);
 
   let txt = formatTime(remaining_time);
-  if (remaining_time < 10 * 1000) {
+
+  if (remaining_time >= 10*1000) {
+
+  } else if (0 < remaining_time && remaining_time < 10 * 1000) {
     fill(1, 0, 0);
-    if (remaining_time === 0) {
-      txt = "8888888";
-    }
+  } else if (remaining_time === 0) {
+    textSize(100);
+    fill(1,0,0);
+    txt = "パチ　パチ　パチ";
+    // framerate下げたい。ResetのところでframeRateを元に戻したい。
   }
-  
-  
+
   text(txt, windowWidth / 2, windowHeight / 2);
 }
 
