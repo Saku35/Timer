@@ -10,7 +10,7 @@ function setup() {
   background(255);
   textAlign(LEFT, CENTER);
   textSize(40);
-  frameRate(5);
+  frameRate(4);
   remaining_time = initial_time;
   measuring_time = initial_time;
   textFont('YuGothic');
@@ -39,11 +39,13 @@ function dispTime() {
     fill(1, 0, 0);
     text(txt, windowWidth / 2, windowHeight / 2);
   } else if (remaining_time === 0) {
-    textSize(100);
+    textSize(200);
     fill(1,0,0);
-    txt = "パチ　パチ　パチ";
-    // framerate下げたい。ResetのところでframeRateを元に戻したい。
-    text(txt, windowWidth / 2, windowHeight / 2);
+
+    text("パチ", windowWidth * random(0.3, 0.8) / 2, windowHeight * random(0.3, 0.8) / 2);
+    text("パチ", windowWidth * random(1.2, 1.7) / 2, windowHeight * random(1.2, 1.7) / 2);
+    text("パチ", windowWidth * random(0.3, 0.8) / 2, windowHeight * random(1.2, 1.7) / 2);
+    text("パチ", windowWidth * random(1.2, 1.7) / 2, windowHeight * random(0.3, 0.8) / 2);
   }
 
   
@@ -71,13 +73,13 @@ function drawBackground() {
     for (let k = 0; k < sepNumY; k++) {
       let corY = lenRect * k;
       let num = 0;
+
       if (remaining_time > 10 * 1000) {
         num =  (i + k + Math.ceil(remaining_time / 80)) % mod; 
       } else {
         num = (i * k + Math.ceil(remaining_time / 80))% mod;
       }
-      
-
+  
       noStroke();
       fill(num / mod, 0.7, 0.5);
       rect(corX, corY, lenRect * 0.9, lenRect * 0.9, 5);
