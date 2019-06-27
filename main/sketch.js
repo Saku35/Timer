@@ -34,17 +34,19 @@ function dispTime() {
   let txt = formatTime(remaining_time);
 
   if (remaining_time >= 10*1000) {
-
+    text(txt, windowWidth / 2, windowHeight / 2);
   } else if (0 < remaining_time && remaining_time < 10 * 1000) {
     fill(1, 0, 0);
+    text(txt, windowWidth / 2, windowHeight / 2);
   } else if (remaining_time === 0) {
     textSize(100);
     fill(1,0,0);
     txt = "パチ　パチ　パチ";
     // framerate下げたい。ResetのところでframeRateを元に戻したい。
+    text(txt, windowWidth / 2, windowHeight / 2);
   }
 
-  text(txt, windowWidth / 2, windowHeight / 2);
+  
 }
 
 function updateTime() {
@@ -141,6 +143,11 @@ function keyTyped() {
   // 4
   if (keyCode === 52) {
     setTimer(30 * 60 * 1000);
+    return;
+  }
+  // 5
+  if (keyCode === 53) {
+    setTimer(60 * 60 * 1000);
     return;
   }
 }
