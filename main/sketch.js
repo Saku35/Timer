@@ -1,4 +1,4 @@
-var initial_time = 15 * 1000; // milli seconds
+var initial_time = 25 * 60 * 1000; // milli seconds
 var measuring_time; // 一旦中断したときの残り時間
 var remaining_time; // 表示する時間
 var time_base; // スタートボタンを押した時の時刻
